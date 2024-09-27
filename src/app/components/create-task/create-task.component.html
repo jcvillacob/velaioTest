@@ -3,5 +3,69 @@
 </div>
 
 <div class="create-content" [class.create-content--active]="modal" (click)="closeModal()">
+  <div class="create-content__card" (click)="$event.stopPropagation()">
+    <div class="create-content__header">
+      <h5 class="create-content__title">Crear Tarea</h5>
+      <div class="create-content__close" (click)="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+    </div>
 
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="create-content__form">
+
+      <!-- Campo para el título de la tarea -->
+      <div class="form__title">
+        <input type="text" placeholder="Tarea" formControlName="title">
+      </div>
+
+      <!-- Campo para la fecha -->
+      <div class="form__date">
+        <div class="date__date">
+          <input type="date" name="fecha" formControlName="fecha">
+          <div class="date__spec">
+            <div class="date__today" (click)="setTodayDate()">Hoy</div>
+            <div class="date__today" (click)="setYesterdayDate()">Ayer</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personas Asociadas -->
+      <div class="form__people">
+        <h4>Personas Asociadas</h4>
+        <div *ngFor="let person of people.controls; let i = index" [formGroupName]="i" class="person">
+
+          <div class="person__header">
+            <h5>Persona {{ i + 1 }}</h5>
+            <button type="button" (click)="removePerson(i)" class="btn-remove-person">Eliminar Persona</button>
+          </div>
+
+          <div class="person__field">
+            <input type="text" placeholder="Nombre" formControlName="name">
+          </div>
+
+          <div class="person__field">
+            <input type="number" placeholder="Edad" formControlName="age">
+          </div>
+
+          <!-- Habilidades de la persona -->
+          <div class="person__skills">
+            <h5>Habilidades</h5>
+            <div *ngFor="let skill of getSkills(i).controls; let j = index" class="skill">
+              <input type="text" [formControlName]="j" placeholder="Habilidad">
+              <button type="button" (click)="removeSkill(i, j)" class="btn-remove-skill">Eliminar Habilidad</button>
+            </div>
+            <button type="button" (click)="addSkill(i)" class="btn-add-skill">Añadir Habilidad</button>
+          </div>
+
+        </div>
+
+        <button type="button" (click)="addPerson()" class="btn-add-person">Añadir Persona</button>
+      </div>
+
+      <!-- Botón para enviar el formulario -->
+      <div class="form__buttons">
+        <button type="submit" class="buttons__guardar" [disabled]="taskForm.invalid">Guardar Tarea</button>
+      </div>
+    </form>
+  </div>
 </div>
