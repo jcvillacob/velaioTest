@@ -1,0 +1,106 @@
+/* Bloque principal: task-list */
+.task-list {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 20px;
+
+    &__title {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    &__filters {
+      display: inline-block;
+
+      &__filter {
+        margin-right: 15px;
+
+        &--active a {
+          font-weight: bold;
+          color: #007bff;
+        }
+
+        a {
+          text-decoration: none;
+          color: #007bff;
+          transition: color 0.2s;
+
+          &:hover {
+            color: #0056b3;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Bloque de la tarjeta: task-card */
+.task-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+  border-left: 5px solid #007bff;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+
+    &__status {
+      font-weight: bold;
+      font-size: 18px;
+      color: #ff3b30;
+
+      &--completed {
+        color: #4caf50;
+      }
+    }
+
+    &__title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    &__date {
+      font-size: 14px;
+      color: #6c757d;
+      font-style: italic;
+    }
+  }
+
+  &__body {
+    &__subtitle {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    &__people-list {
+      list-style-type: none;
+      padding-left: 0;
+
+      &__person {
+        margin-bottom: 8px;
+        line-height: 1.6;
+
+        &-age {
+          color: #ff3b30;
+          font-weight: bold;
+        }
+
+        &-skills {
+          font-weight: normal;
+          color: #6c757d;
+        }
+      }
+    }
+  }
+}
