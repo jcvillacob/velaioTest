@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --px-theme: #f8bdc8;
+  --px-theme-2: #fc8b9e;
+  --px-theme-2-opacity: #f587992d;
+  --px-white: #faf6f7;
+  --px-white-rgb: 255, 245, 247;
+  --px-text: #7b4a56;
+  --px-heading: #62333d;
+  --px-bg: #ffe9ec;
+  --px-dark: #bf4a73;
+}
+
+body {
+  background-color: var(--px-bg);
+  color: var(--px-text);
+}

@@ -1,0 +1,34 @@
+<div class="task-list">
+  <div class="task-list__header">
+    <h3 class="task-list__title">Lista de Tareas</h3>
+    <div class="task-list__filters">
+      <app-filter-button *ngFor="let label of filters" [label]="label" [active]="activeFilter === label"
+        (filterClick)="setFilter(label)"></app-filter-button>
+    </div>
+
+  </div>
+
+  <div *ngFor="let task of filteredTasks" class="task-card">
+    <div class="task-card__header">
+      <h2 class="task-card__title">{{ task.title }}</h2>
+      <span class="task-card__date">{{ task.date | date: 'yyyy-MM-dd' }}</span>
+    </div>
+
+    <div class="task-card__body">
+      <h4 class="task-card__subtitle">Personas Asociadas:</h4>
+      <ul class="task-card__people-list">
+        <li *ngFor="let person of task.people" class="task-card__person">
+          <strong>{{ person.name }} </strong> <span class="task-card__person-age">({{ person.age }} años)</span>
+          <br />
+          Habilidades: <span class="task-card__person-skills">{{ person.skills.join(', ') }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <span class="task-card__status-badge" [ngClass]="{ 'completed': task.completed, 'pending': !task.completed }" (click)="toggleTaskStatus(task)">
+      {{ task.completed ? 'Completado' : 'Pendiente' }}
+    </span>
+  </div>
+</div>
+
+<app-create-task></app-create-task>
