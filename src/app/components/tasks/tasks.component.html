@@ -2,10 +2,10 @@
   <div class="task-list__header">
     <h3 class="task-list__title">Lista de Tareas</h3>
     <div class="task-list__filters">
-      <span class="task-list__filter task-list__filter--active">[<a href="#">Todas</a>]</span>
-      <span class="task-list__filter">[<a href="#">Completadas</a>]</span>
-      <span class="task-list__filter">[<a href="#">Pendientes</a>]</span>
+      <app-filter-button *ngFor="let label of filters" [label]="label" [active]="activeFilter === label"
+        (filterClick)="setFilter(label)"></app-filter-button>
     </div>
+
   </div>
 
   <div *ngFor="let task of tasks" class="task-card">

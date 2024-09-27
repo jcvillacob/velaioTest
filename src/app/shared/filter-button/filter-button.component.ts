@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,5 +9,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./filter-button.component.scss']
 })
 export class FilterButtonComponent {
+  @Input() label: string = '';
+  @Input() active: boolean = false;
+  /* @Output() filterClick = new EventEmitter<void>();
 
+  onClick() {
+    this.filterClick.emit();
+  } */
 }

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.scss']
+  styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent {
   tasks = [
@@ -37,4 +38,12 @@ export class TasksComponent {
       ]
     }
   ];
+  filters = ['Todas', 'Completadas', 'Pendientes'];
+  activeFilter: string = 'Todas';
+
+  // Método para cambiar el filtro activo
+  setFilter(filter: string) {
+    this.activeFilter = filter;
+    console.log(`Filtro activo: ${filter}`);
+  }
 }

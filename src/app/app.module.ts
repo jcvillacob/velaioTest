@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TasksComponent } from './components/tasks/tasks.component';
+import { FilterButtonComponent } from "./shared/filter-button/filter-button.component";
 
 @NgModule({
   declarations: [
@@ -12,8 +13,9 @@ import { TasksComponent } from './components/tasks/tasks.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
-  ],
+    AppRoutingModule,
+    FilterButtonComponent
+],
   providers: [],
   bootstrap: [AppComponent]
 })
