@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
 })
-export class TasksComponent {
+export class TasksComponent implements OnInit {
   tasks = [
     {
       title: 'Tarea A',
@@ -38,12 +37,33 @@ export class TasksComponent {
       ]
     }
   ];
+  filteredTasks: any[] = [];
   filters = ['Todas', 'Completadas', 'Pendientes'];
   activeFilter: string = 'Todas';
+
+  ngOnInit(): void {
+    this.filterTasks(this.activeFilter);
+  }
+
+  filterTasks(filter: string): void {
+    let status: boolean;
+    if (filter == 'Todas') {
+      this.filteredTasks = this.tasks;
+      return;
+    }
+    status = filter == 'Todas' || filter == 'Completadas' ? true : false;
+    this.filteredTasks = this.tasks.filter(task => task.completed == status)
+  }
 
   // Método para cambiar el filtro activo
   setFilter(filter: string) {
     this.activeFilter = filter;
-    console.log(`Filtro activo: ${filter}`);
+    this.filterTasks(filter);
+    console.log(filter)
+  }
+
+  // Método para cambiar el estado de una tarea
+  toggleTaskStatus(task: any): void {
+    task.completed = !task.completed;
   }
 }

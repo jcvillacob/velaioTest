@@ -1,51 +1,55 @@
 /* Bloque principal: task-list */
 .task-list {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 25px auto;
   padding: 20px;
 
   &__header {
     text-align: center;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 25px;
+  }
 
-    &__title {
-      font-size: 24px;
-      margin-bottom: 10px;
+  &__title {
+    font-size: 32px;
+    display: block;
+  }
+
+  &__filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .task-list {
+    &__header {
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      gap: 20px;
     }
 
     &__filters {
-      display: inline-block;
-
-      &__filter {
-        margin-right: 15px;
-
-        &--active a {
-          font-weight: bold;
-          color: #007bff;
-        }
-
-        a {
-          text-decoration: none;
-          color: #007bff;
-          transition: color 0.2s;
-
-          &:hover {
-            color: #0056b3;
-          }
-        }
-      }
+      flex-wrap: wrap;
     }
   }
 }
 
 /* Bloque de la tarjeta: task-card */
 .task-card {
-  background-color: #fff;
+  position: relative;
+  background-color: var(--px-white);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   padding: 20px;
-  border-left: 5px solid #007bff;
+  border-left: 5px solid var(--px-dark);
 
   &__header {
     display: flex;
@@ -54,53 +58,67 @@
     margin-bottom: 15px;
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
+  }
 
-    &__status {
-      font-weight: bold;
-      font-size: 18px;
-      color: #ff3b30;
+  &__title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+  }
 
-      &--completed {
-        color: #4caf50;
-      }
-    }
-
-    &__title {
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    &__date {
-      font-size: 14px;
-      color: #6c757d;
-      font-style: italic;
-    }
+  &__date {
+    font-size: 14px;
+    color: #6c757d;
+    font-style: italic;
   }
 
   &__body {
-    &__subtitle {
-      margin-bottom: 10px;
-      font-weight: 600;
+    margin-top: 15px;
+  }
+
+  &__subtitle {
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  &__people-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  &__person {
+    margin-bottom: 15px;
+    line-height: 1.6;
+
+    &-age {
+      color: #007bff;
+      font-weight: normal;
     }
 
-    &__people-list {
-      list-style-type: none;
-      padding-left: 0;
+    &-skills {
+      font-weight: normal;
+      color: #6c757d;
+    }
+  }
 
-      &__person {
-        margin-bottom: 8px;
-        line-height: 1.6;
+  &__status-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 5px 15px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
 
-        &-age {
-          color: #ff3b30;
-          font-weight: bold;
-        }
+    &.completed {
+      background-color: #28a745;
+    }
 
-        &-skills {
-          font-weight: normal;
-          color: #6c757d;
-        }
-      }
+    &.pending {
+      background-color: #6c757d;
     }
   }
 }
