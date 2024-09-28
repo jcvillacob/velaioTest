@@ -15,14 +15,14 @@ export class TasksComponent implements OnInit {
         {
           name: 'Juan Pérez',
           age: 25,
-          skills: ['JavaScript', 'Angular']
+          skills: ['JavaScript', 'Angular'],
         },
         {
           name: 'María López',
           age: 30,
-          skills: ['TypeScript', 'CSS']
-        }
-      ]
+          skills: ['TypeScript', 'CSS'],
+        },
+      ],
     },
     {
       title: 'Tarea B',
@@ -32,10 +32,10 @@ export class TasksComponent implements OnInit {
         {
           name: 'Carlos Gómez',
           age: 40,
-          skills: ['HTML', 'SCSS']
-        }
-      ]
-    }
+          skills: ['HTML', 'SCSS'],
+        },
+      ],
+    },
   ];
   filteredTasks: any[] = [];
   filters = ['Todas', 'Completadas', 'Pendientes'];
@@ -46,24 +46,33 @@ export class TasksComponent implements OnInit {
   }
 
   filterTasks(filter: string): void {
-    let status: boolean;
-    if (filter == 'Todas') {
+    if (filter === 'Todas') {
       this.filteredTasks = this.tasks;
-      return;
+    } else {
+      const status = filter === 'Completadas';
+      this.filteredTasks = this.tasks.filter((task) => task.completed === status);
     }
-    status = filter == 'Todas' || filter == 'Completadas' ? true : false;
-    this.filteredTasks = this.tasks.filter(task => task.completed == status)
   }
 
   // Método para cambiar el filtro activo
   setFilter(filter: string) {
     this.activeFilter = filter;
     this.filterTasks(filter);
-    console.log(filter)
   }
 
   // Método para cambiar el estado de una tarea
   toggleTaskStatus(task: any): void {
     task.completed = !task.completed;
+  }
+
+  // Método para eliminar una tarea
+  deleteTask(index: number): void {
+    this.tasks.splice(index, 1);
+    this.filterTasks(this.activeFilter);
+  }
+
+  newTask(task: any) {
+    this.tasks.push(task);
+    this.filterTasks(this.activeFilter);
   }
 }

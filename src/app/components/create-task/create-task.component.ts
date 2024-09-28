@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-create-task',
@@ -7,14 +9,14 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./create-task.component.scss']
 })
 export class CreateTaskComponent {
-  modal: boolean = true;
+  @Output() newTask = new EventEmitter<any>();
+  modal: boolean = false;
   taskForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
       fecha: ['', Validators.required],
-      description: ['', Validators.required],
       completed: [false],
       people: this.fb.array([])
     });
@@ -27,7 +29,7 @@ export class CreateTaskComponent {
   addPerson() {
     const personForm = this.fb.group({
       name: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(0)]],
+      age: ['', [Validators.required, Validators.min(18)]],
       skills: this.fb.array([])
     });
     this.people.push(personForm);
@@ -74,14 +76,17 @@ export class CreateTaskComponent {
   onSubmit() {
     if (this.taskForm.valid) {
       const newTask = this.taskForm.value;
-      console.log('Nueva tarea creada:', newTask);
-      // Aquí puedes agregar la lógica para manejar la nueva tarea, como agregarla a un array o enviarla a un backend.
-      this.modal = false; // Cerrar el modal después de la creación de la tarea
-      this.taskForm.reset(); // Reiniciar el formulario
-      // Reiniciar los arrays
+      this.modal = false;
+      this.taskForm.reset();
       this.taskForm.setControl('people', this.fb.array([]));
+      this.newTask.emit(newTask);
     } else {
-      console.log('Formulario no válido');
+      Swal.fire({
+        title: '¡No se pudo Crear!',
+        text: 'Debes llenar todos los campos.',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
     }
   }
 

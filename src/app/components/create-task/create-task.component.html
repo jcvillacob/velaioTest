@@ -30,42 +30,52 @@
       </div>
 
       <!-- Personas Asociadas -->
-      <div class="form__people">
+      <div class="form__people" formArrayName="people">
         <h4>Personas Asociadas</h4>
         <div *ngFor="let person of people.controls; let i = index" [formGroupName]="i" class="person">
-
+          <!-- Botón para eliminar persona -->
           <div class="person__header">
             <h5>Persona {{ i + 1 }}</h5>
-            <button type="button" (click)="removePerson(i)" class="btn-remove-person">Eliminar Persona</button>
+            <button type="button" (click)="removePerson(i)" class="btn-remove-person">
+              Eliminar Persona
+            </button>
           </div>
 
+          <!-- Campo para el nombre de la persona -->
           <div class="person__field">
-            <input type="text" placeholder="Nombre" formControlName="name">
+            <input type="text" placeholder="Nombre" formControlName="name" />
           </div>
 
+          <!-- Campo para la edad de la persona -->
           <div class="person__field">
-            <input type="number" placeholder="Edad" formControlName="age">
+            <input type="number" placeholder="Edad" formControlName="age" />
           </div>
 
           <!-- Habilidades de la persona -->
-          <div class="person__skills">
+          <div class="person__skills" formArrayName="skills">
             <h5>Habilidades</h5>
             <div *ngFor="let skill of getSkills(i).controls; let j = index" class="skill">
-              <input type="text" [formControlName]="j" placeholder="Habilidad">
-              <button type="button" (click)="removeSkill(i, j)" class="btn-remove-skill">Eliminar Habilidad</button>
+              <input type="text" [formControlName]="j" placeholder="Habilidad" />
+              <button type="button" (click)="removeSkill(i, j)" class="btn-remove-skill">
+                Eliminar Habilidad
+              </button>
             </div>
-            <button type="button" (click)="addSkill(i)" class="btn-add-skill">Añadir Habilidad</button>
+            <button type="button" (click)="addSkill(i)" class="btn-add-skill">
+              Añadir Habilidad
+            </button>
           </div>
-
         </div>
 
-        <button type="button" (click)="addPerson()" class="btn-add-person">Añadir Persona</button>
+        <!-- Botón para agregar una nueva persona -->
+        <button type="button" (click)="addPerson()" class="btn-add-person">
+          Añadir Persona
+        </button>
       </div>
 
-      <!-- Botón para enviar el formulario -->
-      <div class="form__buttons">
-        <button type="submit" class="buttons__guardar" [disabled]="taskForm.invalid">Guardar Tarea</button>
-      </div>
-    </form>
+  <!-- Botón para enviar el formulario -->
+  <div class="form__buttons">
+    <button type="submit" class="buttons__guardar">Guardar Tarea</button>
   </div>
+  </form>
+</div>
 </div>
