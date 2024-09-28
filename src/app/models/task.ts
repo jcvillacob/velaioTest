@@ -2,8 +2,8 @@ import { Person } from "./person";
 
 export interface Task {
   id: number;
-  nombre: string;
-  fechaLimite: Date;
-  completada: boolean;
-  personas: Person[];
+  title: string;
+  date: string;
+  completed: boolean;
+  people: Person[];
 }

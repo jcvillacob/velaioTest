@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import * as fromTasks from '../../state/reducers/tasks/tasks.reducer';
+import * as TasksActions from '../../state/actions/tasks/tasks.actions';
+import { Task } from '../../models/task';
 
 @Component({
   selector: 'app-tasks',
@@ -6,73 +12,70 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent implements OnInit {
-  tasks = [
-    {
-      title: 'Tarea A',
-      date: '2024-10-01',
-      completed: false,
-      people: [
-        {
-          name: 'Juan Pérez',
-          age: 25,
-          skills: ['JavaScript', 'Angular'],
-        },
-        {
-          name: 'María López',
-          age: 30,
-          skills: ['TypeScript', 'CSS'],
-        },
-      ],
-    },
-    {
-      title: 'Tarea B',
-      date: '2024-09-25',
-      completed: true,
-      people: [
-        {
-          name: 'Carlos Gómez',
-          age: 40,
-          skills: ['HTML', 'SCSS'],
-        },
-      ],
-    },
-  ];
-  filteredTasks: any[] = [];
+  tasks$: Observable<Task[]>;
+  filteredTasks$!: Observable<Task[]>;
   filters = ['Todas', 'Completadas', 'Pendientes'];
-  activeFilter: string = 'Todas';
+
+  activeFilter$ = new BehaviorSubject<string>('Todas');
+  counts$!: Observable<{ [key: string]: number }>;
+  filtersWithCounts$!: Observable<{ label: string; count: number }[]>;
+
+  constructor(private store: Store<{ tasks: fromTasks.TasksState }>) {
+    this.tasks$ = this.store.pipe(select((state) => state.tasks.tasks));
+  }
 
   ngOnInit(): void {
-    this.filterTasks(this.activeFilter);
+    this.store.dispatch(TasksActions.loadTasks());
+
+    this.counts$ = this.tasks$.pipe(
+      map((tasks) => {
+        const total = tasks.length;
+        const completed = tasks.filter((task) => task.completed).length;
+        const pending = tasks.filter((task) => !task.completed).length;
+
+        return {
+          Todas: total,
+          Completadas: completed,
+          Pendientes: pending,
+        };
+      })
+    );
+
+    this.filtersWithCounts$ = this.counts$.pipe(
+      map((counts) =>
+        this.filters.map((label) => ({
+          label,
+          count: counts[label],
+        }))
+      )
+    );
+
+    this.filteredTasks$ = combineLatest([this.tasks$, this.activeFilter$]).pipe(
+      map(([tasks, activeFilter]) => {
+        if (activeFilter === 'Todas') {
+          return tasks;
+        } else {
+          const status = activeFilter === 'Completadas';
+          return tasks.filter((task) => task.completed === status);
+        }
+      })
+    );
   }
 
-  filterTasks(filter: string): void {
-    if (filter === 'Todas') {
-      this.filteredTasks = this.tasks;
-    } else {
-      const status = filter === 'Completadas';
-      this.filteredTasks = this.tasks.filter((task) => task.completed === status);
-    }
+  setFilter(filterLabel: string) {
+    this.activeFilter$.next(filterLabel);
   }
 
-  // Método para cambiar el filtro activo
-  setFilter(filter: string) {
-    this.activeFilter = filter;
-    this.filterTasks(filter);
+  toggleTaskStatus(task: Task): void {
+    const updatedTask = { ...task, completed: !task.completed };
+    this.store.dispatch(TasksActions.updateTask({ task: updatedTask }));
   }
 
-  // Método para cambiar el estado de una tarea
-  toggleTaskStatus(task: any): void {
-    task.completed = !task.completed;
+  deleteTask(taskId: number): void {
+    this.store.dispatch(TasksActions.deleteTask({ taskId }));
   }
 
-  // Método para eliminar una tarea
-  deleteTask(index: number): void {
-    this.tasks.splice(index, 1);
-    this.filterTasks(this.activeFilter);
-  }
-
-  newTask(task: any) {
-    this.tasks.push(task);
-    this.filterTasks(this.activeFilter);
+  newTask(task: Task) {
+    this.store.dispatch(TasksActions.addTask({ task }));
   }
 }

@@ -1,6 +1,6 @@
 export interface Person {
-  id: number;
-  nombreCompleto: string;
-  edad: number;
-  habilidades: string[];
+  id?: number;
+  name: string;
+  age: number;
+  skills: string[];
 }
