@@ -45,29 +45,26 @@ export class TasksService {
 
   constructor() {}
 
-  // Simular obtener las tareas
+  // Obtener las tareas
   getTasks(): Observable<Task[]> {
-    return of(this.tasks).pipe(delay(500)); // Simula una llamada asíncrona
+    return of(this.tasks).pipe(delay(500));
   }
 
-  // Simular agregar una tarea
+  // Agregar una tarea
   addTask(task: Task): Observable<Task> {
     const newTask = { ...task, id: this.currentId++ };
-    // Crear un nuevo array en lugar de modificar el existente
     this.tasks = [...this.tasks, newTask];
     return of(newTask).pipe(delay(500));
   }
 
-  // Simular eliminar una tarea
+  // Eliminar una tarea
   deleteTask(taskId: number): Observable<number> {
-    // Crear un nuevo array sin la tarea eliminada
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
     return of(taskId).pipe(delay(500));
   }
 
-  // Simular actualizar una tarea
+  // Actualizar una tarea
   updateTask(updatedTask: Task): Observable<Task> {
-    // Crear un nuevo array de tareas con la tarea actualizada
     this.tasks = this.tasks.map((task) =>
       task.id === updatedTask.id ? updatedTask : task
     );

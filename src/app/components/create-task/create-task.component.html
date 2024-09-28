@@ -13,18 +13,18 @@
 
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="create-content__form">
 
-      <!-- Campo para el título de la tarea -->
+      <!-- Título de la tarea -->
       <div class="form__title">
         <input type="text" placeholder="Tarea" formControlName="title">
       </div>
 
-      <!-- Campo para la fecha -->
+      <!-- Fecha de la tarea -->
       <div class="form__date">
         <div class="date__date">
           <input type="date" name="fecha" formControlName="date">
           <div class="date__spec">
-            <div class="date__today" (click)="setTodayDate()">Hoy</div>
-            <div class="date__today" (click)="setYesterdayDate()">Ayer</div>
+            <div class="date__today" (click)="setWeekDate()">1 Sem</div>
+            <div class="date__today" (click)="setTwoWeeksDate()">2 Sem</div>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
             </button>
           </div>
 
-          <!-- Campo para el nombre de la persona -->
+          <!-- Nombre de la persona -->
           <div class="person__field">
             <input type="text" placeholder="Nombre" formControlName="name" />
             <div *ngIf="person.get('name')?.invalid && (person.get('name')?.dirty || person.get('name')?.touched)">

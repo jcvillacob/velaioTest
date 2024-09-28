@@ -10,8 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { tasksReducer } from './state/reducers/tasks/tasks.reducer';
-import { TasksEffects } from './state/effects/tasks/tasks.effects';
+import { tasksReducer } from './state/reducers/tasks.reducer';
+import { TasksEffects } from './state/effects/tasks.effects';
 
 @NgModule({
   declarations: [

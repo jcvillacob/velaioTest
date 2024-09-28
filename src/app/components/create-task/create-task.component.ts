@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Task } from '../../models/task';
 
@@ -18,7 +18,7 @@ export class CreateTaskComponent {
       title: ['', Validators.required],
       date: ['', Validators.required],
       completed: [false],
-      people: this.fb.array([], this.minFormArrayLength(1)),
+      people: this.fb.array([], [this.minFormArrayLength(1), this.uniqueNamesValidator()]),
     });
   }
 
@@ -33,6 +33,17 @@ export class CreateTaskComponent {
       skills: this.fb.array([], this.minFormArrayLength(1))
     });
     this.people.push(personForm);
+  }
+
+  uniqueNamesValidator(): ValidatorFn {
+    return (formArray: AbstractControl): ValidationErrors | null => {
+      if (formArray instanceof FormArray) {
+        const names = formArray.controls.map(control => control.get('name')?.value?.trim().toLowerCase());
+        const hasDuplicates = names.some((name, index) => names.indexOf(name) !== index);
+        return hasDuplicates ? { duplicateNames: true } : null;
+      }
+      return null;
+    };
   }
 
   minFormArrayLength(minLength: number): ValidatorFn {
@@ -69,17 +80,19 @@ export class CreateTaskComponent {
     this.modal = false;
   }
 
-  setTodayDate() {
+  setWeekDate() {
+    const weeks = new Date();
+    weeks.setDate(weeks.getDate() + 7);
     this.taskForm.controls['date'].setValue(
-      new Date().toISOString().substring(0, 10)
+      weeks.toISOString().substring(0, 10)
     );
   }
 
-  setYesterdayDate() {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
+  setTwoWeeksDate() {
+    const weeks = new Date();
+    weeks.setDate(weeks.getDate() + 14);
     this.taskForm.controls['date'].setValue(
-      yesterday.toISOString().substring(0, 10)
+      weeks.toISOString().substring(0, 10)
     );
   }
 
@@ -95,6 +108,9 @@ export class CreateTaskComponent {
       }
       if (this.taskForm.get('people')?.errors?.['minLengthArray']) {
         errors.push(`Debe haber al menos una persona en la tarea.`);
+      }
+      if (this.people.errors?.['duplicateNames']) {
+        errors.push('Los nombres de las personas no pueden repetirse.');
       }
       this.people.controls.forEach((person, index) => {
         if (person.get('name')?.invalid) {
@@ -127,7 +143,7 @@ export class CreateTaskComponent {
   
       Swal.fire({
         title: '¡No se pudo Crear!',
-        text: errors.join('\n'),
+        text: errors.join(' '),
         icon: 'error',
         confirmButtonText: 'Ok',
       });

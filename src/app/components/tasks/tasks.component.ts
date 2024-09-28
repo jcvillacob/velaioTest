@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import * as fromTasks from '../../state/reducers/tasks/tasks.reducer';
-import * as TasksActions from '../../state/actions/tasks/tasks.actions';
+import * as fromTasks from '../../state/reducers/tasks.reducer';
+import * as TasksActions from '../../state/actions/tasks.actions';
 import { Task } from '../../models/task';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-tasks',
@@ -72,7 +74,18 @@ export class TasksComponent implements OnInit {
   }
 
   deleteTask(taskId: number): void {
-    this.store.dispatch(TasksActions.deleteTask({ taskId }));
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: 'Se eliminará la tarea de manera permanente',
+      showDenyButton: true,
+      confirmButtonText: "Eliminar",
+      denyButtonText: `Cancelar`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.store.dispatch(TasksActions.deleteTask({ taskId }));
+        Swal.fire("Eliminada!", "", "success");
+      }
+    });
   }
 
   newTask(task: Task) {
