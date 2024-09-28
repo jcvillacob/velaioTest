@@ -13,18 +13,18 @@
 
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="create-content__form">
 
-      <!-- Campo para el título de la tarea -->
+      <!-- Título de la tarea -->
       <div class="form__title">
         <input type="text" placeholder="Tarea" formControlName="title">
       </div>
 
-      <!-- Campo para la fecha -->
+      <!-- Fecha de la tarea -->
       <div class="form__date">
         <div class="date__date">
-          <input type="date" name="fecha" formControlName="fecha">
+          <input type="date" name="fecha" formControlName="date">
           <div class="date__spec">
-            <div class="date__today" (click)="setTodayDate()">Hoy</div>
-            <div class="date__today" (click)="setYesterdayDate()">Ayer</div>
+            <div class="date__today" (click)="setWeekDate()">1 Sem</div>
+            <div class="date__today" (click)="setTwoWeeksDate()">2 Sem</div>
           </div>
         </div>
       </div>
@@ -41,14 +41,22 @@
             </button>
           </div>
 
-          <!-- Campo para el nombre de la persona -->
+          <!-- Nombre de la persona -->
           <div class="person__field">
             <input type="text" placeholder="Nombre" formControlName="name" />
+            <div *ngIf="person.get('name')?.invalid && (person.get('name')?.dirty || person.get('name')?.touched)">
+              <small *ngIf="person.get('name')?.errors?.['required']">El nombre es obligatorio.</small>
+              <small *ngIf="person.get('name')?.errors?.['minlength']">El nombre debe tener al menos 5 caracteres.</small>
+            </div>
           </div>
 
           <!-- Campo para la edad de la persona -->
           <div class="person__field">
             <input type="number" placeholder="Edad" formControlName="age" />
+            <div *ngIf="person.get('age')?.invalid && (person.get('age')?.dirty || person.get('age')?.touched)">
+              <small *ngIf="person.get('age')?.errors?.['required']">La edad es Obligatoria.</small>
+              <small *ngIf="person.get('age')?.errors?.['min']">Debe tener al menos 18 años.</small>
+            </div>
           </div>
 
           <!-- Habilidades de la persona -->

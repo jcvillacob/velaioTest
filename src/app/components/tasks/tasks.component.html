@@ -2,22 +2,26 @@
   <div class="task-list__header">
     <h3 class="task-list__title">Lista de Tareas</h3>
     <div class="task-list__filters">
-      <app-filter-button
-        *ngFor="let label of filters"
-        [label]="label"
-        [active]="activeFilter === label"
-        (filterClick)="setFilter(label)"
-      ></app-filter-button>
+      
+      <!-- Botones de filtro -->
+      <app-filter-button *ngFor="let filter of filtersWithCounts$ | async"
+        [label]="filter.label + ' (' + filter.count + ')'" [active]="(activeFilter$ | async) === filter.label"
+        (filterClick)="setFilter(filter.label)"></app-filter-button>
     </div>
   </div>
 
-  <div *ngFor="let task of filteredTasks; let i = index" class="task-card">
+  <!-- Mensaje si no hay tareas -->
+  <div *ngIf="(filteredTasks$ | async)?.length === 0" class="no-tasks-message">
+    <p>No hay tareas en este momento.</p>
+  </div>
+
+  <div *ngFor="let task of filteredTasks$ | async; let i = index" class="task-card">
     <div class="task-card__header">
       <h2 class="task-card__title">{{ task.title }}</h2>
       <span class="task-card__date">{{ task.date | date: 'yyyy-MM-dd' }}</span>
 
       <!-- Botón de borrar tarea -->
-      <button class="task-card__delete-button" (click)="deleteTask(i)">
+      <button class="task-card__delete-button" (click)="deleteTask(task.id)">
         <i class="fa-solid fa-trash"></i>
       </button>
     </div>
@@ -35,11 +39,9 @@
       </ul>
     </div>
 
-    <span
-      class="task-card__status-badge"
-      [ngClass]="{ 'completed': task.completed, 'pending': !task.completed }"
-      (click)="toggleTaskStatus(task)"
-    >
+    <!-- Estado de la tarea -->
+    <span class="task-card__status-badge" [ngClass]="{ 'completed': task.completed, 'pending': !task.completed }"
+      (click)="toggleTaskStatus(task)">
       {{ task.completed ? 'Completado' : 'Pendiente' }}
     </span>
   </div>

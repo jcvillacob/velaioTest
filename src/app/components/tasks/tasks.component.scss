@@ -1,4 +1,4 @@
-/* Bloque principal: task-list */
+/* task-list */
 .task-list {
   max-width: 800px;
   margin: 25px auto;
@@ -23,6 +23,13 @@
     align-items: center;
     gap: 25px;
   }
+
+  & .no-tasks-message {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 18px;
+    color: var(--px-dark);
+  }
 }
 
 @media screen and (max-width: 800px) {
@@ -38,7 +45,7 @@
   }
 }
 
-/* Bloque de la tarjeta: task-card */
+/* task-card */
 .task-card {
   position: relative;
   background-color: var(--px-white);
