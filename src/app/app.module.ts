@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { FilterButtonComponent } from "./shared/filter-button/filter-button.component";
 import { CreateTaskComponent } from './components/create-task/create-task.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CreateTaskComponent } from './components/create-task/create-task.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FilterButtonComponent
+    FilterButtonComponent,
+    ReactiveFormsModule
 ],
   providers: [],
   bootstrap: [AppComponent]
