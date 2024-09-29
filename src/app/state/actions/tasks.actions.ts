@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Task } from '../../models/task';
 
+/* Load tasks */
 export const loadTasks = createAction('[Tasks] Load Tasks');
 export const loadTasksSuccess = createAction(
   '[Tasks] Load Tasks Success',
@@ -11,6 +12,7 @@ export const loadTasksFailure = createAction(
   props<{ error: any }>()
 );
 
+/* Add tasks */
 export const addTask = createAction(
   '[Tasks] Add Task',
   props<{ task: Task }>()
@@ -24,6 +26,7 @@ export const addTaskFailure = createAction(
   props<{ error: any }>()
 );
 
+/* Delete tasks */
 export const deleteTask = createAction(
   '[Tasks] Delete Task',
   props<{ taskId: number }>()
@@ -37,6 +40,7 @@ export const deleteTaskFailure = createAction(
   props<{ error: any }>()
 );
 
+/* Update Tasks */
 export const updateTask = createAction(
   '[Tasks] Update Task',
   props<{ task: Task }>()

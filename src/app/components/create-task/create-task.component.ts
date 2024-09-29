@@ -47,12 +47,11 @@ export class CreateTaskComponent {
   }
 
   minFormArrayLength(minLength: number): ValidatorFn {
-    return (formArray: AbstractControl): { [key: string]: any } | null => {
+    return (formArray: AbstractControl): ValidationErrors | null => {
       if (formArray instanceof FormArray) {
-        return formArray.length >= minLength ? null : { minLengthArray: { valid: false } };
-      } else {
-        return { minLengthArray: { valid: false } };
-      }
+        return formArray.length >= minLength ? null : { minLengthArray: { valid: false }};
+      } 
+      return null;
     };
   }
 
@@ -129,7 +128,7 @@ export class CreateTaskComponent {
             errors.push(`La edad de la persona ${index + 1} debe ser mayor o igual a 18.`);
           }
         }
-        if (person.get('skills')?.invalid) {
+        if (person.get('skills')?.errors?.['minlength']) {
           errors.push(`La persona ${index + 1} debe tener al menos una habilidad.`);
         }
         // Validación de habilidades individuales
