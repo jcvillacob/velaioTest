@@ -128,7 +128,7 @@ export class CreateTaskComponent {
             errors.push(`La edad de la persona ${index + 1} debe ser mayor o igual a 18.`);
           }
         }
-        if (person.get('skills')?.errors?.['minlength']) {
+        if (person.get('skills')?.errors?.['minLengthArray']) {
           errors.push(`La persona ${index + 1} debe tener al menos una habilidad.`);
         }
         // Validación de habilidades individuales
@@ -150,7 +150,7 @@ export class CreateTaskComponent {
       const newTask: Task = this.taskForm.value;
       this.modal = false;
       this.taskForm.reset();
-      this.taskForm.setControl('people', this.fb.array([]));
+      this.taskForm.setControl('people', this.fb.array([], [this.minFormArrayLength(1), this.uniqueNamesValidator()]));
       this.newTask.emit(newTask);
     }
   }  
