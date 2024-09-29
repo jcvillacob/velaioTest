@@ -33,9 +33,9 @@
       <div class="form__people" formArrayName="people">
         <h4>Personas Asociadas</h4>
         <div *ngFor="let person of people.controls; let i = index" [formGroupName]="i" class="person">
-          <!-- Botón para eliminar persona -->
           <div class="person__header">
             <h5>Persona {{ i + 1 }}</h5>
+            <!-- Botón para eliminar persona -->
             <button type="button" (click)="removePerson(i)" class="btn-remove-person">
               Eliminar Persona
             </button>

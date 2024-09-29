@@ -7,7 +7,6 @@ import * as TasksActions from '../../state/actions/tasks.actions';
 import { Task } from '../../models/task';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',

@@ -13,9 +13,7 @@ export class TasksEffects {
       mergeMap(() =>
         this.tasksService.getTasks().pipe(
           map((tasks) => TasksActions.loadTasksSuccess({ tasks })),
-          catchError((error) =>
-            of(TasksActions.loadTasksFailure({ error }))
-          )
+          catchError((error) => of(TasksActions.loadTasksFailure({ error })))
         )
       )
     )
@@ -27,9 +25,7 @@ export class TasksEffects {
       mergeMap(({ task }) =>
         this.tasksService.addTask(task).pipe(
           map((newTask) => TasksActions.addTaskSuccess({ task: newTask })),
-          catchError((error) =>
-            of(TasksActions.addTaskFailure({ error }))
-          )
+          catchError((error) => of(TasksActions.addTaskFailure({ error })))
         )
       )
     )
@@ -41,9 +37,7 @@ export class TasksEffects {
       mergeMap(({ taskId }) =>
         this.tasksService.deleteTask(taskId).pipe(
           map(() => TasksActions.deleteTaskSuccess({ taskId })),
-          catchError((error) =>
-            of(TasksActions.deleteTaskFailure({ error }))
-          )
+          catchError((error) => of(TasksActions.deleteTaskFailure({ error })))
         )
       )
     )
@@ -57,16 +51,11 @@ export class TasksEffects {
           map((updatedTask) =>
             TasksActions.updateTaskSuccess({ task: updatedTask })
           ),
-          catchError((error) =>
-            of(TasksActions.updateTaskFailure({ error }))
-          )
+          catchError((error) => of(TasksActions.updateTaskFailure({ error })))
         )
       )
     )
   );
 
-  constructor(
-    private actions$: Actions,
-    private tasksService: TasksService
-  ) {}
+  constructor(private actions$: Actions, private tasksService: TasksService) {}
 }

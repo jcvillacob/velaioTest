@@ -2,11 +2,12 @@
   <div class="task-list__header">
     <h3 class="task-list__title">Lista de Tareas</h3>
     <div class="task-list__filters">
-      
+
       <!-- Botones de filtro -->
       <app-filter-button *ngFor="let filter of filtersWithCounts$ | async"
         [label]="filter.label + ' (' + filter.count + ')'" [active]="(activeFilter$ | async) === filter.label"
-        (filterClick)="setFilter(filter.label)"></app-filter-button>
+        (filterClick)="setFilter(filter.label)">
+      </app-filter-button>
     </div>
   </div>
 

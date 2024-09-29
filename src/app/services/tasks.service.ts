@@ -10,38 +10,55 @@ export class TasksService {
   private tasks: Task[] = [
     {
       id: 1,
-      title: 'Tarea A',
-      date: '2024-10-01',
+      title: 'Desarrollar módulo de autenticación',
+      date: '2024-10-05',
       completed: false,
       people: [
         {
-          name: 'Juan Pérez',
-          age: 25,
-          skills: ['JavaScript', 'Angular'],
+          name: 'Sofía Martínez',
+          age: 28,
+          skills: ['JavaScript', 'Node.js', 'MongoDB'],
         },
         {
-          name: 'María López',
-          age: 30,
-          skills: ['TypeScript', 'CSS'],
+          name: 'Andrés Torres',
+          age: 32,
+          skills: ['React', 'Redux', 'CSS'],
         },
       ],
     },
     {
       id: 2,
-      title: 'Tarea B',
-      date: '2024-09-25',
+      title: 'Crear documentación del proyecto',
+      date: '2024-09-30',
       completed: true,
       people: [
         {
-          name: 'Carlos Gómez',
-          age: 40,
-          skills: ['HTML', 'SCSS'],
+          name: 'Lucía Ramírez',
+          age: 35,
+          skills: ['Markdown', 'Technical Writing'],
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: 'Realizar pruebas de integración',
+      date: '2024-10-10',
+      completed: false,
+      people: [
+        {
+          name: 'Diego Salazar',
+          age: 29,
+          skills: ['Selenium', 'JUnit', 'Testing'],
+        },
+        {
+          name: 'Carla Fernández',
+          age: 27,
+          skills: ['Postman', 'API Testing'],
         },
       ],
     },
   ];
-
-  private currentId = 3;
+  private currentId = 4;
 
   constructor() {}
 
