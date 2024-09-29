@@ -47,7 +47,7 @@ export class CreateTaskComponent {
   }
 
   minFormArrayLength(minLength: number): ValidatorFn {
-    return (formArray: AbstractControl): ValidationErrors | null => {
+    return (formArray: AbstractControl): { [key: string]: any } | null => {
       if (formArray instanceof FormArray) {
         return formArray.length >= minLength ? null : { minLengthArray: { valid: false }};
       } 
